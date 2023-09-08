@@ -1,15 +1,23 @@
 import pegaArquivo from './index.js'; 
 import chalk from 'chalk';
 import fs from 'fs';
+import listaValidada from './https-validacao.js';
 
 // Método process node que captura o que foi passado para a linha de comando do cmd e retorna o caminho de um arquivo
 const caminho = process.argv;
 
-function imprimeLista(resultado, identificador = ''){
+async function imprimeLista(valida, resultado, identificador = ''){
+    if(valida){
+        console.log(
+            chalk.yellow('Lista Validada:'),
+            chalk.black.bgGreen(identificador),
+            await listaValidada(resultado));
+    } else {
     console.log(
         chalk.yellow('Lista de links:'),
         chalk.black.bgGreen(identificador),
         resultado);
+    }
 }
 
 //A função processaTexto passa um caminho da const caminho que pega o valor do caminho digitado no cmd. 
@@ -17,6 +25,8 @@ function imprimeLista(resultado, identificador = ''){
 //Como a função pegaArquivo é uma função assíncrona, é necessário que a função processaTexto seja assíncrona tbm para exibir o resultado. 
 async function processaTexto(argumentos){
     const caminho = argumentos[2];
+    const valida = argumentos[3] === '--valida';
+    console.log(valida); 
     //o bloco try{}catch(erro){} executa o que está em try, e se der erro pega o erro e executa uma ação para o erro
     try{
         fs.lstatSync(caminho);
@@ -31,14 +41,14 @@ async function processaTexto(argumentos){
     if(fs.lstatSync(caminho).isFile()){
         const resultado = await pegaArquivo(argumentos[2]);
         //console.log(chalk.yellow('Lista de links:'),resultado); 
-        imprimeLista(resultado);
+        imprimeLista(valida, resultado);
     //fs.lstatSync().isDirectory() verifica se o caminho é um diretório
     } else if(fs.lstatSync(caminho).isDirectory()){
         const arquivos = await fs.promises.readdir(caminho)
         arquivos.forEach(async (nomeDeArquivo) => {
             const lista = await pegaArquivo(`${caminho}/${nomeDeArquivo}`)
             //console.log(chalk.yellow('Lista de links:'),lista);
-            imprimeLista(lista, nomeDeArquivo); 
+            imprimeLista(valida, lista, nomeDeArquivo); 
         })
     }
 }
