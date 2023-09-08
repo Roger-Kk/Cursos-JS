@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import fs from 'fs';
 
-console.log(chalk.blue('Olá mundo'));
+console.log(chalk.blue('Executando arquivo index.js'));
 
 //Texto guardado numa variável para testes antes de buscar no arquivo: 
 /*
@@ -12,7 +12,7 @@ async function pegaArquivo (caminhoDoArquivo){
     try{
         const encoding = 'utf-8';
         const texto = await fs.promises.readFile(caminhoDoArquivo, encoding)
-        console.log(extraiLinks(texto));
+        return(extraiLinks(texto));
     } catch (erro){
         trataErro(erro)
     }
@@ -23,7 +23,7 @@ function extraiLinks(texto){
     const capturas = [...texto.matchAll(regex)]; //método de manipulação de string
     //const capturas = regex.exec(texto); //método de regex
     const resultados = capturas.map(captura => ({[captura[1]]: captura[2]}))
-    return resultados;
+    return resultados.length !== 0 ? resultados : "Não há links no arquivo";
 }
 
 function trataErro(erro){
