@@ -31,8 +31,10 @@ function trataErro(erro){
     throw new Error (chalk.red(erro.code, 'Não há arquivo no diretório'));
 }
 
+//pegaArquivo('./arquivos/texto.md');
 
-pegaArquivo('./Arquivos/texto.md');
+export default pegaArquivo;
+
 
 //Para pegar o erro no código: 
 //pegaArquivo('./Arquivos/textossssss.md'); //erro
