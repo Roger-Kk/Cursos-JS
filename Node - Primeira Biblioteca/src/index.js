@@ -76,3 +76,5 @@ export default pegaArquivo;
 // }
 
 
+//Artigo sobre promisses: 
+//https://www.alura.com.br/artigos/async-await-no-javascript-o-que-e-e-quando-usar
