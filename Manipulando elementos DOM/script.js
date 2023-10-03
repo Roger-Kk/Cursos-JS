@@ -5,9 +5,22 @@ const longoBt = document.querySelector('.app__card-button--longo');
 const banner = document.querySelector('.app__image');
 const titulo = document.querySelector('.app__title');
 const botoes = document.querySelectorAll('.app__card-button');
+const startPauseBt = document.querySelector('#start-pause');
 const musicaFocoInput = document.querySelector('#alternar-musica');
 const musica = new Audio('./sons/luna-rise-part-one.mp3');
+const audioPlay = new Audio('./sons/play.wav');
+const audioPause = new Audio('./sons/pause.mp3');
+const audioTempoFinalizado = new Audio('./sons/beep.mp3');
+const iniciarOuPausarBt = document.querySelector('#start-pause span');
+const imagemIniciarOuPausarBt = document.querySelector('.app__card-primary-butto-icon');
+const tempoNaTela = document.querySelector('#timer');
+
+let intervaloId = null;
 //readFile() lê os arquivos diretamente. 
+
+let tempoDecorridoEmSegundos = 1500;
+
+
 musica.loop = true;
 
 musicaFocoInput.addEventListener('change', () => {
@@ -21,6 +34,7 @@ musicaFocoInput.addEventListener('change', () => {
 focoBt.addEventListener('click', () => {
     //html.setAttribute('data-contexto', 'foco');
     //banner.setAttribute('src', './imagens/foco.png');
+    tempoDecorridoEmSegundos = 1500;
     alterarContexto('foco');
     focoBt.classList.add('active');
 })
@@ -28,6 +42,7 @@ focoBt.addEventListener('click', () => {
 curtoBt.addEventListener('click', () => {
     //html.setAttribute('data-contexto', 'descanso-curto'); 
     //banner.setAttribute('src', './imagens/descanso-curto.png');
+    tempoDecorridoEmSegundos = 300;
     alterarContexto('descanso-curto');
     curtoBt.classList.add('active');
 })
@@ -35,11 +50,13 @@ curtoBt.addEventListener('click', () => {
 longoBt.addEventListener('click', () =>{
     //html.setAttribute('data-contexto', 'descanso-longo'); 
     //banner.setAttribute('src', './imagens/descanso-longo.png');
+    tempoDecorridoEmSegundos = 900;
     alterarContexto('descanso-longo'); 
     longoBt.classList.add('active'); 
 })
 
 function alterarContexto(contexto){
+    mostrarTempo();
     botoes.forEach( (contexto) =>{
         contexto.classList.remove('active');
     })
@@ -62,3 +79,45 @@ function alterarContexto(contexto){
             break;
     }   
 }
+
+const contagemRegressiva = () => {
+    if (tempoDecorridoEmSegundos <= 0){
+        audioTempoFinalizado.play();
+        alert ('Tempo Finalizado.');
+        zerar();
+        tempoDecorridoEmSegundos = 5;
+        return
+}
+tempoDecorridoEmSegundos -= 1;
+mostrarTempo();
+
+}
+
+startPauseBt.addEventListener('click', iniciarOuPausar);
+
+function iniciarOuPausar(){
+    if(intervaloId){
+        audioPause.play();
+        zerar();
+        return
+    }
+    audioPlay.play();
+    intervaloId = setInterval(contagemRegressiva, 1000); 
+    iniciarOuPausarBt.textContent = "Pausar";
+    imagemIniciarOuPausarBt.setAttribute('src', './imagens/pause.png');
+}
+
+function zerar(){
+    clearInterval(intervaloId);
+    iniciarOuPausarBt.textContent = "Começar";
+    imagemIniciarOuPausarBt.setAttribute('src', './imagens/play_arrow.png' );
+    intervaloId = null;
+}
+
+function mostrarTempo (){
+    const tempo = new Date(tempoDecorridoEmSegundos * 1000);
+    const tempoFormatado = tempo.toLocaleString('pt-br', {minute: '2-digit', second:'2-digit'});
+    tempoNaTela.innerHTML = `${tempoFormatado}`;
+}
+
+mostrarTempo(); //Ao chamar a função no escopo global ela é executada todo tempo, apresentando sempre o tempo na tela. 
