@@ -84,6 +84,13 @@ const contagemRegressiva = () => {
     if (tempoDecorridoEmSegundos <= 0){
         audioTempoFinalizado.play();
         alert ('Tempo Finalizado.');
+        //Trecho de código atualizado no Curso LocalStorage
+        //Criação de um evento para quando zerar a contagem de texto finalizar a tarefa pelo script-crud
+        const focoAtivo = html.getAttribute('data-contexto') == 'foco'
+        if(focoAtivo){
+            const evento = new CustomEvent('FocoFinalizado')
+            document.dispatchEvent(evento)
+        }
         zerar();
         tempoDecorridoEmSegundos = 5;
         return
