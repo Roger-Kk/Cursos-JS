@@ -13,35 +13,6 @@ let tarefas = JSON.parse(localStorage.getItem('tarefas')) || []
 let tarefaSelecionada = null;
 let liTarefaSelecionada = null;
 
-//***************************Eventos*******************************
-btnAdicionarTarefa.addEventListener('click', () => {
-    formAdicionarTarefa.classList.toggle('hidden')
-});
-
-formAdicionarTarefa.addEventListener('submit', (evento) =>{
-    evento.preventDefault(); //impede o evento padrão (que seria recarregar a página)
-    //const descricaoTarefa = textArea.value;
-    const tarefa = {
-        descricao: textArea.value
-    }
-    tarefas.push(tarefa);
-    const elementoTarefa = criarElementoTarefa(tarefa)
-    ulTarefas.append(elementoTarefa)
-    atualizarTarefas()
-    textArea.value = ''
-    formAdicionarTarefa.classList.add('hidden')
-});
-
-//Para cada tarefa cadastrada chama a função que cria um elemento para a tarefa e insere o elemento no ul do código html da página
-tarefas.forEach(tarefa => {
-    const elementoTarefa = criarElementoTarefa(tarefa)
-    ulTarefas.append(elementoTarefa)
-});
-
-btnCancelar.addEventListener('click', () => {
-    cancelarTarefa();
-});
-
 
 //****************************Funções******************************
 //Transforma uma tarefa em um elemento que representa essa tarefa
@@ -115,6 +86,37 @@ function cancelarTarefa () {
     textArea.value = '';
     formAdicionarTarefa.classList.add('hidden');
 }
+
+
+//***************************Eventos*******************************
+btnAdicionarTarefa.addEventListener('click', () => {
+    formAdicionarTarefa.classList.toggle('hidden')
+});
+
+formAdicionarTarefa.addEventListener('submit', (evento) =>{
+    evento.preventDefault(); //impede o evento padrão (que seria recarregar a página)
+    //const descricaoTarefa = textArea.value;
+    const tarefa = {
+        descricao: textArea.value
+    }
+    tarefas.push(tarefa);
+    const elementoTarefa = criarElementoTarefa(tarefa)
+    ulTarefas.append(elementoTarefa)
+    atualizarTarefas()
+    textArea.value = ''
+    formAdicionarTarefa.classList.add('hidden')
+});
+
+//Para cada tarefa cadastrada chama a função que cria um elemento para a tarefa e insere o elemento no ul do código html da página
+tarefas.forEach(tarefa => {
+    const elementoTarefa = criarElementoTarefa(tarefa)
+    ulTarefas.append(elementoTarefa)
+});
+
+btnCancelar.addEventListener('click', () => {
+    cancelarTarefa();
+});
+
 
 //Quando terminar a contagem gera um evento 'FocoFinalizado' e é executado essas operações: 
 document.addEventListener('FocoFinalizado', () =>{
