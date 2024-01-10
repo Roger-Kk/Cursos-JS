@@ -6,7 +6,7 @@ const elementoMenorValor = document.getElementById('menor-valor');
 const elementoMaiorValor = document.getElementById('maior-valor');
 
 
-console.log('Número Secreto: ', gerarNumeroAleatorio()); 
+console.log('Número Secreto: ', numeroSecreto); 
 elementoMenorValor.innerHTML = menorValor;
 elementoMaiorValor.innerHTML = maiorValor;
 
