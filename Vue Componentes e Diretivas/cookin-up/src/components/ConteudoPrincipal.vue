@@ -1,39 +1,45 @@
 <script lang="ts">
+import BotaoPrincipal from './BotaoPrincipal.vue';
+import MostrarReceitas from './MostrarReceitas.vue';
 import SelecionarIngredientes from './SelecionarIngredientes.vue';
+import SuaLista from './SuaLista.vue';
 
+type Pagina = 'SelecionarIngredientes' | 'MostrarReceitas';
 
 export default{
-    data() {
-        return {
-            ingredientes: []
-        };
-    },
-    components: {SelecionarIngredientes}
+  data() {
+            return{
+                ingredientes: [] as string[],
+                conteudo:  'SelecionarIngredientes' as Pagina
+            };
+        },
+    components: {SelecionarIngredientes, SuaLista, MostrarReceitas},
+    methods:{
+      adicionarIngrediente(ingrediente: string){
+        this.ingredientes.push(ingrediente)
+      },
+      removerIngrediente(ingrediente: string){
+        this.ingredientes = this.ingredientes.filter(iLista => ingrediente !== iLista);
+      },
+      navegar(pagina: Pagina){
+        this.conteudo = pagina;
+      }
+    }
 }
 
 </script>
 
 <template>
     <main class="conteudo-principal">
-        <section>
-            <span class="subtitulo-lg sua-lista-texto">
-                Sua lista: 
-            </span>
-
-            <ul v-if="ingredientes.length" class="ingredientes-sua-lista">
-                <li v-for="ingrediente in ingredientes" v-bind:key="ingrediente" class="ingrediente">
-                    {{ ingrediente }}
-                </li>
-            </ul>
-
-            <p v-else class="paragrafo lista-vazia">
-                <img src="../assets/imagens/icones/lista-vazia.svg" alt="Ícone de pesquisa">
-                Sua lista está vazia. Selecione ingredientes para iniciar. 
-            </p>
-        </section>
-
-        <SelecionarIngredientes />
-
+      <SuaLista :ingredientes="ingredientes"/>
+      <KeepAlive include="SelecionarIngredientes">
+        <SelecionarIngredientes v-if="conteudo === 'SelecionarIngredientes'" @adicionar-ingrediente="adicionarIngrediente" v-on:remover-ingrediente="removerIngrediente" 
+        @buscar-receitas="navegar('MostrarReceitas')"/> 
+        <MostrarReceitas
+         v-else-if="conteudo === 'MostrarReceitas'"
+         :ingredientes="ingredientes"
+         @editar-receitas="navegar('SelecionarIngredientes')"/>
+      </KeepAlive>
     </main>
 </template>
 
@@ -49,43 +55,6 @@ export default{
   flex-direction: column;
   align-items: center;
   gap: 5rem;
-}
-
-.sua-lista-texto {
-  color: var(--coral, #F0633C);
-  display: block;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.ingredientes-sua-lista {
-  display: flex;
-  justify-content: center;
-  gap: 1rem 1.5rem;
-  flex-wrap: wrap;
-}
-
-.ingrediente {
-  display: inline-block;
-  border-radius: 0.5rem;
-  min-width: 4.25rem;
-  padding: 0.5rem;
-  text-align: center;
-    transition: 0.2s;
-    color: var(--creme, #FFFAF3);
-  background: var(--coral, #F0633C);
-  font-weight: 700;
-}
-
-.lista-vazia {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-
-  color: var(--coral, #F0633C);
-  text-align: center;
 }
 
 @media only screen and (max-width: 1300px) {
