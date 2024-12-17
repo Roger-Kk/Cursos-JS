@@ -85,7 +85,7 @@ main.modo-escuro{
   flex: 1 1 12.5%; 
   background-color: #0d3b66; /* Cor de fundo para a barra lateral */
   color: white;
-  padding: 20px;
+  padding: 10px;
   box-sizing: border-box;
 }
 

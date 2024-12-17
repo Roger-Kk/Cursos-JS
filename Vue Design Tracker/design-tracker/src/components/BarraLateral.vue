@@ -47,7 +47,7 @@ header {
 }
 
 header .logo {
-    width: 500px; /* Tamanho fixo para a logo */
+    width: 250px; /* Tamanho fixo para a logo */
     height: auto;
     margin-bottom: 0.3rem;
 }
@@ -93,6 +93,10 @@ header .logo {
     .barra-lateral {
     width: 150px; /* Barra lateral ainda mais estreita */
   }
+  header .logo {
+        width: 150px; /* Ajuste a largura da logo conforme necessário */
+        height: auto; /* Mantém a proporção da altura */
+    }
   
 }
 
