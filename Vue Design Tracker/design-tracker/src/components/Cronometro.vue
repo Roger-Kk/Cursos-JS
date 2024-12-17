@@ -29,6 +29,7 @@ export default defineComponent({
 
 .display{
     color: var(--texto-primario);
+    font-size: large;
 }
 
 </style>

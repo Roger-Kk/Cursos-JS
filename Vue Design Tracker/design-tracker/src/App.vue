@@ -69,7 +69,7 @@ main{
 
 .container {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   min-height: 100vh;
   width: 100%;
   padding: 0;
@@ -82,7 +82,7 @@ main.modo-escuro{
 }
 
 .barra-lateral {
-  flex: 1 1 12.5%; 
+  flex: 1 1 15%; 
   background-color: #0d3b66; /* Cor de fundo para a barra lateral */
   color: white;
   padding: 10px;
@@ -90,7 +90,7 @@ main.modo-escuro{
 }
 
 .conteudo {
-  flex: 1 1 87.5%;
+  flex: 1 1 80%;
   background-color: var(--bg-primario); /* Cor de fundo para o conteúdo */
   color: #181818;
   padding: 20px;
