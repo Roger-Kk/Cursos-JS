@@ -4,8 +4,8 @@
             <h1>
                 <img src="../assets/logo_dt.png" alt="" class="logo">
             </h1>
-            <button class="button" @click="alterarTema">
-                {{textoBotao}}
+            <button class="switch" @click="alterarTema" :class="{'switch-on': modoEscuroAtivo, 'switch-off': !modoEscuroAtivo}">
+                <div class="slider" :class="{'slider-on': modoEscuroAtivo, 'slider-off': !modoEscuroAtivo}"></div>
             </button>
         </header>
 
@@ -17,42 +17,27 @@
     export default defineComponent({
         name: 'BarraLateral',
         emits: ['aoTemaAlterado'],
-        data() {
+        /*data() {
             return{
                 modoEscuroAtivo: false
             }
-        },
-        computed:{
-            textoBotao(){
-                if(this.modoEscuroAtivo){
-                    return 'Modo Claro'
-                }
-                return 'Modo Escuro'
+        },*/
+        props: {
+            modoEscuroAtivo:{
+                type: Boolean,
+                required: true
             }
         },
         methods: {
             alterarTema(){
-                this.modoEscuroAtivo = !this.modoEscuroAtivo
-                this.$emit('aoTemaAlterado', this.modoEscuroAtivo)
+                //this.modoEscuroAtivo = !this.modoEscuroAtivo
+                this.$emit('aoTemaAlterado', !this.modoEscuroAtivo)
             }
         }
     })
 </script>
 
 <style scoped>
-/* Todo estilo do componente*/
-.barra-lateral {
-  position: fixed; /* Fixar a barra lateral */
-  top: 0;
-  left: 0;
-  height: 100vh; /* Ocupa toda a altura da tela */
-  width: 150px; /* Largura inicial reduzida para metade */
-  background-color: #0d3b66;
-  padding: 1rem;
-  color: white;
-  display: flex;
-  flex-direction: column;
-} 
 
 header {
   display: flex;
@@ -65,6 +50,43 @@ header .logo {
     width: 500px; /* Tamanho fixo para a logo */
     height: auto;
     margin-bottom: 0.3rem;
+}
+
+.switch {
+  width: 42px;
+  height: 21px;
+  background-color: #ccc;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.switch-on {
+    background-color: #2b2d42 !important;
+}
+
+.switch-off {
+    background-color: #ccc !important;
+}
+
+.slider {
+  width: 17px;
+  height: 17px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 1.7px;
+  left: 1.5px;
+  transition: transform 0.3s;
+}
+
+.slider-on  {
+  transform: translateX(21px); 
+}
+
+.slider-off  {
+  transform: translateX(0);
 }
 
 @media only screen and (max-width: 1024px) {

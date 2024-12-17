@@ -1,6 +1,8 @@
 <template>
     <div class="is-flex is align-itens-center is-justify-content-space-between">    
-        <CronometroTempo :tempoEmSegundos="tempoEmSegundos"/>       
+        <div class="cronometro">
+            <CronometroTempo :tempoEmSegundos="tempoEmSegundos"/> 
+        </div>      
         <BotaoDesign @clicado="iniciar" icone="fas fa-play" texto="Play" :desabilitado="cronometroRodando"/>
         <BotaoDesign @clicado="finalizar" icone="fas fa-stop" texto="Stop" :desabilitado="!cronometroRodando"/>
     </div>
@@ -43,3 +45,13 @@ export default defineComponent({
     }
 })
 </script>
+
+<style scoped>
+
+.cronometro{
+    background-color: white;
+    padding: 0.5rem;
+    border-radius: 7px;
+}
+
+</style>

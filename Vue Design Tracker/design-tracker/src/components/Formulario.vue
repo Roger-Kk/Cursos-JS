@@ -1,10 +1,10 @@
 <template>
     <div class="box formulario">
-        <div class="columns">
+        <div>
             <div class="column is-8" role="form" aria-label="Formulário para criação de uma nova tarefa">
                 <input type="text" class="input" placeholder="Qual tarefa você deseja" v-model="descricao">
             </div>
-            <div class="column">
+            <div class="column is-4">
                 <TemporizadorDesign @ao-temporizador-finalizado="finalizarTarefa"/>
             </div>
         </div>
@@ -39,37 +39,16 @@ export default defineComponent({
 });
 </script>
 
-<style>
-
-    .formulario{
-        color: var(--texto-primario);
-        background-color: var(--bg-primario);
-    }
-
-</style>
 <style scoped>
 
+.formulario{
+        color: var(--texto-primario);
+        background-color: var(--bg-primario);
+}
+
 .box {
-    width: 100%;
-  max-width: 1200px ;
-  align-items: center;
-}
-
-.columns {
-  display: flex;
-  justify-content: space-between;
-}
-
-.column {
-  padding: 0 1rem;
-}
-
-.column input.input {
   width: 100%;
-}
-
-.is-flex {
-  display: flex;
+  align-items: center;
 }
   
 </style>

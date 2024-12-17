@@ -1,9 +1,12 @@
 <template>
-  <main class= "columns is-gapless is-multiline" :class="{ 'modo-escuro': modoEscuroAtivo }">
-    <div class = "column is-one-quarter is-full-mobile">
-      <BarraLateral @aoTemaAlterado="trocarTema"/>
+  <!-- <main class= "columns is-gapless is-multiline" :class="{ 'modo-escuro': modoEscuroAtivo }">  -->
+  <main class="container" :class="{ 'modo-escuro': modoEscuroAtivo }">
+   <!--<div class = "column is-one-quarter is-full-mobile"> --> 
+    <div class="barra-lateral">
+      <BarraLateral :modoEscuroAtivo="modoEscuroAtivo" @aoTemaAlterado="trocarTema"/>
     </div>
-    <div class="column is-three-quarter is-full-mobile conteudo">
+   <!-- <div class="column is-three-quarter is-full-mobile conteudo"> --> 
+    <div class="conteudo">
       <Formulario @aoSalvarTarefa="salvarTarefa"/>
       <div class="lista">
         <TarefaLista v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa" />
@@ -53,31 +56,63 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 
 main{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
   --bg-primario: #fff;
   --texto-primario: #000;
 }
 
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  min-height: 100vh;
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 main.modo-escuro{
   --bg-primario: #2b2d42;
-  --texto-primario: #ddd;
+  --texto-primario: #181818;
 }
 
-.conteudo{
-  background-color: var(--bg-primario) ;
+.barra-lateral {
+  flex: 1 1 12.5%; 
+  background-color: #0d3b66; /* Cor de fundo para a barra lateral */
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.columns {
-  display: flex;
-  justify-content: space-between;
+.conteudo {
+  flex: 1 1 87.5%;
+  background-color: var(--bg-primario); /* Cor de fundo para o conteúdo */
+  color: #181818;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-@media only screen and (max-width: 1024px) {
-    .columns {
-        margin-left: 150px; /* Ajuste da margem da área de conteúdo */
-     }
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column; /* Organiza em coluna para telas menores */
+  }
+
+  .barra-lateral {
+    flex: 1 1 100%; /* Barra lateral ocupa 100% da largura */
+    padding: 10px;
+    max-height: 100px; /* Reduz o padding */
+  }
+
+  .conteudo {
+    flex: 1 1 100%; /* Conteúdo ocupa 100% da largura */
+    padding: 10px; /* Reduz o padding */
+  }
+
 }
 
 </style>
