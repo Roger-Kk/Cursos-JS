@@ -3,6 +3,10 @@
     {
       "id": "1",
       "nome": "Design Tracker"
+    },
+    {
+      "id": "6c45",
+      "nome": "Projeto 2"
     }
   ],
   "tarefas": [
@@ -19,6 +23,15 @@
       "id": "8d3a",
       "duracaoEmSegundos": 4,
       "descricao": "Refatorar Design Tracker"
+    },
+    {
+      "id": "9ec8",
+      "duracaoEmSegundos": 6,
+      "descricao": "teste",
+      "projeto": {
+        "id": "6c45",
+        "nome": "Projeto 2"
+      }
     }
   ]
 }
