@@ -1,0 +1,8 @@
+
+-Abra a pasta no terminal e vá para a pasta design-tracker. 
+
+-Execute o servidor pelo comando: "npm run serve"
+
+-Abra o cmd e vá para a pasta design-tracker.
+
+-Execute o servidor json pelo comando: "json-server --watch db.json"
