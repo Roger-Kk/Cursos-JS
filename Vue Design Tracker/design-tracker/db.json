@@ -3,10 +3,22 @@
     {
       "id": "1",
       "nome": "Design Tracker"
+    }
+  ],
+  "tarefas": [
+    {
+      "id": 1,
+      "duracaoEmSegundos": 120,
+      "descricao": "Configuração do Ambiente",
+      "projeto": {
+        "id": 1,
+        "nome": "Design Tracker"
+      }
     },
     {
-      "id": "4b5d",
-      "nome": "Projeto 2"
+      "id": "8d3a",
+      "duracaoEmSegundos": 4,
+      "descricao": "Refatorar Design Tracker"
     }
   ]
 }
