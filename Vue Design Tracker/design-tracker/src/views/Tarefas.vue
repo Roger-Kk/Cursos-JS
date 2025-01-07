@@ -5,36 +5,42 @@
         <BoxDesign v-if="listaEstaVazia">
         Inicie uma tarefa executando o Play. 
         </BoxDesign>
+        <div class="field">
+          <p class="control has-icons-left has-icons-right">
+            <input type="text" class="input" placeholder="Digite para filtrar" v-model="filtro" />
+            <span class="icon is-small is-left">
+              <i class="fas fa-search"></i>
+            </span>
+          </p>
+        </div>
         <TarefaLista v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa" @aoTarefaClicada="selecionarTarefa"/>
-        <div class="modal" :class="{'is-active': tarefaSelecionada}" v-if="tarefaSelecionada">
-          <div class="modal-background"></div>
-          <div class="modal-card">
-            <header class="modal-card-header">
+       <ModalDesign :mostrar="tarefaSelecionada != null">
+          <template v-slot:cabecalho>
               <p class="modal-card-title">Editar Tarefa</p>
               <button class="delete" aria-label="close" @click="fecharModal"></button>
-            </header>
-            <section class="modal-card-body">
-              <div class="field">
-                <label for="descricaoDaTarefa" class="label">
-                    Descricao
-                </label>
-                <input type="text" class="input" v-model="tarefaSelecionada.descricao" id="nomeDoProjeto"/>
+          </template>
+          <template v-slot:corpo>
+            <div class="field">
+              <label for="descricaoDaTarefa" class="label">
+                 Descricao
+              </label>
+              <input type="text" class="input" v-model="tarefaSelecionada.descricao" id="descricaoDaTarefa"/>
             </div>
-            </section>
-            <footer class="modal-card-footer">
-              <button class=" button is-success" @click="alterarTarefa">Salvar</button>
-              <button class="button" @click="fecharModal">Cancelar</button>
-            </footer>
-          </div>
-        </div>
+          </template>
+          <template v-slot:rodape>
+            <button @click="alterarTarefa" class=" button is-success">Salvar</button>
+            <button @click="fecharModal" class="button"> Cancelar </button>
+          </template>
+        </ModalDesign>
     </div>
 </template>
   
   <script lang="ts">
-  import { computed, defineComponent } from 'vue';
+  import { computed, defineComponent, ref, watchEffect } from 'vue';
   import Formulario from '../components/Formulario.vue';
   import TarefaLista from '../components/Tarefa.vue';
   import BoxDesign from '../components/Box.vue';
+  import ModalDesign from '../components/Modal.vue';
   import { useStore } from '@/store';
   import { ALTERAR_TAREFA, CADASTRAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS } from '@/store/tipo-acoes';
   import ITarefa from '@/interfaces/ITarefa';
@@ -44,7 +50,8 @@
     components: {
       Formulario,
       TarefaLista,
-      BoxDesign
+      BoxDesign, 
+      ModalDesign
     }, 
     data (){
       return{
@@ -72,11 +79,19 @@
     },
     setup (){
         const store = useStore();
-        store.dispatch(OBTER_TAREFAS)
-        store.dispatch(OBTER_PROJETOS)
+        store.dispatch(OBTER_TAREFAS);
+        store.dispatch(OBTER_PROJETOS);
+        const filtro = ref('');
+        const tarefas = computed(() => store.state.tarefas.filter((t) => !filtro.value || t.descricao.includes(filtro.value)));
+
+        watchEffect(() => {
+          store.dispatch(OBTER_TAREFAS, filtro.value)
+        })
+
         return {
-            tarefas: computed(() => store.state.tarefas),
-            store
+            tarefas,
+            store,
+            filtro
         };
     },
     

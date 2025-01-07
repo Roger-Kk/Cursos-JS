@@ -11,7 +11,7 @@
   ],
   "tarefas": [
     {
-      "id": 1,
+      "id": "1",
       "duracaoEmSegundos": 120,
       "descricao": "Configuração do Ambiente",
       "projeto": {

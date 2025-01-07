@@ -1,9 +1,9 @@
 
 import { InjectionKey } from "vue";
 import { createStore, Store, useStore as vuexUseStore} from "vuex";
-import { ADICIONA_PROJETO, ADICIONA_TAREFAS, ALTERA_PROJETO, DEFINIR_PROJETOS, DEFINIR_TAREFAS, EXCLUIR_PROJETO, NOTIFICAR } from "./tipo-mutacoes";
+import { ADICIONA_TAREFAS, DEFINIR_TAREFAS, NOTIFICAR } from "./tipo-mutacoes";
 import { INotificacao } from "@/interfaces/INotificacao";
-import { ALTERAR_PROJETO, ALTERAR_TAREFA, CADASTRAR_PROJETO, CADASTRAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS, REMOVER_PROJETO } from "./tipo-acoes";
+import { ALTERAR_TAREFA, CADASTRAR_TAREFA, OBTER_TAREFAS} from "./tipo-acoes";
 import http from "@/http"
 import ITarefa from "@/interfaces/ITarefa";
 import { EstadoProjeto, projeto } from "./modulos/projeto";
@@ -44,7 +44,11 @@ export const store = createStore<Estado>({
         }
     },
     actions: {
-        [OBTER_TAREFAS] ({ commit }){
+        [OBTER_TAREFAS] ({ commit }, filtro:string){
+            let url = 'tarefas'
+            if(filtro){
+                url += '?descricao=' + filtro
+            }
             http.get('tarefas')
                 .then(resposta => commit(DEFINIR_TAREFAS, resposta.data))
         },
