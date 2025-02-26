@@ -1,0 +1,44 @@
+Como iniciar o servidor em localhost: 
+
+1 - Instalar o node.js na máquina; 
+        - Acessar o site: https://nodejs.org/en/download
+        - Verificar a versão instalada com o comando "node -v" no terminal na pasta do projeto;
+        
+2 - Com o terminal aberto na pasta do projeto, instalar o json server com o comando "npm install -g json-server";
+
+3 - Crie uma pasta para os arquivos backend e inicialize um arquivo de configurações backend (só para manter organizado e separados os arquivos no projeto);
+    - No projeto principal crie a pasta "backend";
+    - No terminal, vá para a pasta "backend" e execute o comando "npm init -y";
+    - Será criado um arquivo package.json na pasta "backend";
+
+4 - Crie um arquivo db.json na pasta "backend" e popule-o com informações no formato json;
+    - Este arquivo serve para mockar ou simular uma api. Então os dados serão em formato json, e representarão o que a api retorna. Exemplo: 
+
+    {
+    "nome_endpoint": [
+      {
+        "nome_ou_id_conteudo_1": "2a56",
+        "descricao_conteudo_1": "Descrição do conteúdo 1 aqui!",
+        "autor_conteudo_1": "Responsável pela informação neste exemplo"
+      },
+      {
+        "nome_ou_id_conteudo_2": "3a29",
+        "descricao_conteudo_2": "Descrição do conteúdo 2 aqui!",
+        "autor_conteudo_2": "Responsável pela  segunda informação neste exemplo"
+      },
+    ]
+    }
+
+5 - No arquivo package.json, em "scripts", inclua o comando de inicialização do json server;
+    - Substitua (ou apenas inclua) o "test" por "start: json-server --watch db.jon --port 3000" em "scripts". 
+
+6 - No terminal, vá para a pasta "backend" e digite o comando de inicialização;
+    - digite o comando "npm start"; 
+    - Exemplo de sucesso apresentará a URL base na porta configurada pelo package.json e o endpoint em db.json: 
+    Index:
+    http://localhost:3000/
+
+    Endpoints:
+    http://localhost:3000/nome_endpoint
+
+Pronto. Sua API está funcionando!
