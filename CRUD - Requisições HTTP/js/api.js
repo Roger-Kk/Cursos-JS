@@ -1,9 +1,12 @@
-//arquivo que fará a requisição para a API
+//Atribuindo a URL base numa variável: 
+const URL_BASE = "http://localhost:3000";
+
+//Utilização do Axios para fazer requisições Http (outra forma ao invés do fetch):
 const api = {
     async buscarPensamentos(){
         try {
-            const response = await fetch('http://localhost:3000/pensamentos');
-            return await response.json();
+            const response = await axios(`${URL_BASE}/pensamentos`);
+            return await response.data;
             
         } catch (error) {
             alert("Erro ao buscar pensamentos");
@@ -11,9 +14,35 @@ const api = {
         }
     },
 
+//arquivo que fará a requisição para a API
+/*const api = {
+    async buscarPensamentos(){
+        try {
+            const response = await fetch(`${URL_BASE}/pensamentos`);
+            return await response.json();
+            
+        } catch (error) {
+            alert("Erro ao buscar pensamentos");
+            throw error;
+        }
+    },
+*/
+//Requisição com Axios:
+async salvarPensamentos(pensamento){
+    try {
+        const response = await axios.post(`${URL_BASE}/pensamentos`, pensamento)
+        return await response.data;
+        
+    } catch (error) {
+        alert("Erro ao salvar pensamentos");
+        throw error;
+    }
+},
+
+/*
     async salvarPensamentos(pensamento){
         try {
-            const response = await fetch('http://localhost:3000/pensamentos', {
+            const response = await fetch(`${URL_BASE}/pensamentos`, {
                 method: "POST", 
                 headers: {
                     "Content-Type": "application/json"
@@ -27,10 +56,10 @@ const api = {
             throw error;
         }
     },
-
+*/
     async buscarPensamentosPorId(id){
         try {
-            const response = await fetch(`http://localhost:3000/pensamentos/${id}`);
+            const response = await fetch(`${URL_BASE}/pensamentos/${id}`);
             return await response.json();
             
         } catch (error) {
@@ -41,7 +70,7 @@ const api = {
 
     async editarPensamento(pensamento){
         try {
-            const response = await fetch(`http://localhost:3000/pensamentos/${pensamento.id}`, {
+            const response = await fetch(`${URL_BASE}/pensamentos/${pensamento.id}`, {
                 method: "PUT", 
                 headers: {
                     "Content-Type": "application/json"
@@ -52,6 +81,18 @@ const api = {
             
         } catch (error) {
             alert("Erro ao editar pensamento");
+            throw error;
+        }
+    },
+
+    async excluirPensamento(id){
+        try {
+            const response = await fetch(`${URL_BASE}/pensamentos/${id}`, {
+                method: "DELETE", 
+            })
+            
+        } catch (error) {
+            alert("Erro ao excluir um pensamento");
             throw error;
         }
     },

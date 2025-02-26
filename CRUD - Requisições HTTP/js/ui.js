@@ -15,22 +15,19 @@ const ui = {
 
     async renderizarPensamentos(){
         const listaPensamentos = document.getElementById("lista-pensamentos");
-
+        const mensagemVazia = document.getElementById("mensagem-vazia");
+        listaPensamentos.innerHTML = "";
         try{
             const pensamentos = await api.buscarPensamentos();
-            // Código antes da substituição pela função de adicionarPensamentoNaLista()
-            // pensamentos.forEach(pensamento => {
-            //     listaPensamentos.innerHTML += `
-            //     <li class="li-pensamento" data-id="${pensamento.id}">
-            //         <img src="assets/imagens/aspas-azuis.png" alt="Aspas azuis" class="icone-aspas">
-            //         <div class="pensamento-conteudo">${pensamento.conteudo}</div>
-            //         <div class="pensamento-autoria">${pensamento.autoria}</div>
-            //     </li>`
-            // });
             pensamentos.forEach(ui.adicionarPensamentoNaLista);
-        } catch(error){
-            console.log("Erro ao carregar dados de pensamentos da API.");
-            throw error;
+            if (pensamentos.length === 0) {
+                mensagemVazia.style.display = "block";
+              } else {
+                mensagemVazia.style.display = "none";
+                pensamentos.forEach(ui.adicionarPensamentoNaLista);
+             } 
+        } catch{
+            alert("Erro ao renderizar pensamentos");
         }
     },
 
@@ -62,9 +59,26 @@ const ui = {
         iconeEditar.alt = "Editar";
         botaoEditar.appendChild(iconeEditar);
 
+        const botaoExcluir = document.createElement("button");
+        botaoExcluir.classList.add("botao-excluir");
+        botaoExcluir.onclick = async () => {
+            try{
+                await api.excluirPensamento(pensamento.id);
+                ui.renderizarPensamentos();
+            }catch (error){
+                alert("Erro ao excluir pensamento");
+            }
+        }
+
+        const iconeExcluir = document.createElement("img");
+        iconeExcluir.src = "assets/imagens/icone-excluir.png";
+        iconeExcluir.alt = "Excluir";
+        botaoExcluir.appendChild(iconeExcluir);
+
         const icones = document.createElement("div");
         icones.classList.add("icones");
         icones.appendChild(botaoEditar);
+        icones.appendChild(botaoExcluir);
 
         li.appendChild(iconeAspas);
         li.appendChild(pensamentoConteudo);
