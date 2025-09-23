@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Teste de código: 
+
+    <input type="file" id="imageInput" accept="image/*">
+    <img id="preview" src="" alt="Pré-visualização da imagem" style="max-width: 200px; display: none;">
+
+</body>
+
+<script>
+    document.getElementById('imageInput').addEventListener('change', function(event) {
+    const file = event.target.files[0]; // Pegando o arquivo selecionado pelo usuário
+    if (file) {
+        const reader = new FileReader(); // Criando uma instância do FileReader
+        reader.onload = function(e) {
+            const preview = document.getElementById('preview');
+            preview.src = e.target.result; // Atribuindo o resultado da leitura como fonte da imagem de pré-visualização
+            preview.style.display = 'block'; // Tornando a pré-visualização visível
+        };
+        reader.readAsDataURL(file); // Lendo o arquivo como um Data URL
+    }
+});
+</script>
+</html>
