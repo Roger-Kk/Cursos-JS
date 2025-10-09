@@ -1,9 +1,12 @@
 
 //Método para apresentar os elementos na tela
 const elementoParaInserirLivros = document.getElementById("livros");
-
+const elementoComValorTotalDeLivrosDisponiveis = document.getElementById('valor_total_livros_disponiveis');
 
 function exibirOsLivrosNaTela(listaDeLivros){
+
+  //limpa elemento com valor total de livros disponíveis
+  elementoComValorTotalDeLivrosDisponiveis.innerHTML = "";
 
   elementoParaInserirLivros.innerHTML = "";
 

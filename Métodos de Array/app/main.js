@@ -13,6 +13,7 @@ async function getBuscarLivrosDaAPI(){
     //console.log(livros);
     //console.table(livros);
     let livrosComDesconto = aplicarDesconto(livros);
+    console.log(livrosComDesconto);
     exibirOsLivrosNaTela(livrosComDesconto);
     
 }
