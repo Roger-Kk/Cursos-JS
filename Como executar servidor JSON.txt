@@ -1,0 +1,22 @@
+Olá, 
+A ideia é que o arquivo videos.json sirva como uma API fake pra gente usar no curso. Para isso será necessário executar o JSON Server no computador. 
+Segue os passos de como fazer: 
+OBS: Caso já tenha sido executado um passo, pode pulá-lo. 
+
+1 - Instalar Node.js:  https://nodejs.org/en/download/
+
+2 - Instalar o JSON Server
+Abra o Prompt de Comando e digite:  npm install -g json-server
+
+3 - Caso utilize Windows é necessário alterar uma configuração do PowerShell: 
+Abra o PowerShell como administrador e digite: 
+Get-ExecutionPolicy
+Caso a política de restrição seja: "Restricted", altere para "RemoteSigned". Digite: 
+Set-ExecutionPolicy RemoteSigned
+Após usar o JSON Server, volte a configuração para "Restricted". Digite: 
+Set-ExecutionPolicy Restricted
+
+4 - Abra o Terminal do VSCode na pasta do projeto e execute o código: 
+    json-server --watch backend/videos.json
+
+Pronto. O JSON Server será iniciado e começará a servir uma API REST falsa com base nos dados do arquivo videos.json. 
