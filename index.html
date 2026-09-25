@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cursos JavaScript — Como rodar os exemplos</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-2: #1c2129;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #d4c14e99;
+      --accent-solid: #e3d05a;
+      --ok: #3fb950;
+      --warn: #d29922;
+      --vue: #42b883;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 3rem 1.25rem 4rem;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+    }
+
+    main { max-width: 820px; margin: 0 auto; }
+
+    h1 { font-size: 2rem; margin: 0 0 0.6rem; letter-spacing: -0.01em; }
+    h1 span { color: var(--accent-solid); }
+
+    .intro { color: var(--muted); margin: 0 0 2.25rem; max-width: 64ch; }
+
+    h2 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      margin: 2.75rem 0 0.9rem;
+      font-weight: 600;
+    }
+
+    /* --- Pré-requisitos --- */
+    .setup {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.35rem 1.5rem;
+    }
+
+    .setup ol { margin: 0; padding-left: 1.3rem; }
+    .setup li { margin-bottom: 0.9rem; }
+    .setup li:last-child { margin-bottom: 0; }
+
+    .prompt { color: var(--accent-solid); font-weight: 600; }
+
+    /* --- Cards --- */
+    .repo {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.4rem 1.5rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .repo-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.6rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .repo-title { font-weight: 600; font-size: 1.05rem; margin: 0; }
+
+    .path {
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.76rem;
+      color: var(--muted);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.1rem 0.45rem;
+    }
+
+    .repo-desc { color: var(--muted); font-size: 0.92rem; margin: 0 0 1rem; }
+
+    .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      font-weight: 600;
+      margin: 0 0 0.45rem;
+    }
+
+    pre {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.8rem 1rem;
+      overflow-x: auto;
+      margin: 0 0 0.9rem;
+    }
+
+    code {
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.84rem;
+    }
+
+    pre code { color: var(--text); }
+
+    p code, li code {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.08rem 0.35rem;
+      font-size: 0.85em;
+    }
+
+    .steps { margin: 0 0 0.9rem; padding-left: 1.3rem; font-size: 0.92rem; }
+    .steps li { margin-bottom: 0.35rem; }
+    .steps li:last-child { margin-bottom: 0; }
+
+    .url {
+      display: inline-block;
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.82rem;
+      color: var(--accent-solid);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--accent-solid);
+      word-break: break-all;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      padding: 0.12rem 0.5rem;
+      border-radius: 999px;
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    .tag-browser { color: var(--ok);        border: 1px solid var(--ok); }
+    .tag-node    { color: var(--warn);      border: 1px solid var(--warn); }
+    .tag-vue     { color: var(--vue);       border: 1px solid var(--vue); }
+
+    .note {
+      margin-top: 2.5rem;
+      padding: 0.9rem 1.1rem;
+      border-left: 3px solid var(--border);
+      color: var(--muted);
+      font-size: 0.87rem;
+    }
+
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer a { color: var(--accent-solid); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Cursos <span>JavaScript</span></h1>
+    <p class="intro">
+      Exemplos do repositório, com o passo a passo para rodar cada um. Alguns abrem
+      direto no navegador; outros precisam do Node.js, porque dependem de um
+      servidor ou de um framework.
+    </p>
+
+    <h2>Antes de começar</h2>
+    <div class="setup">
+      <ol>
+        <li>
+          <span class="prompt">Clone o repositório.</span> Copie tudo para o seu
+          computador com:
+          <pre><code>git clone [github.com](https://github.com/Roger-Kk/Cursos-JS.git)
+cd Cursos-JS</code></pre>
+          Sem Git instalado? Use o botão verde <em>Code → Download ZIP</em> e
+          descompacte.
+        </li>
+        <li>
+          <span class="prompt">Tenha o VS Code com Live Server.</span> A maioria das
+          pastas tem um <code>index.html</code>. Abra a pasta no VS Code, clique com
+          o botão direito no <code>index.html</code> e escolha
+          <em>Open with Live Server</em>. Se preferir, dê duplo clique no arquivo —
+          também abre no navegador.
+        </li>
+        <li>
+          <span class="prompt">Instale o Node.js</span> para os exemplos que rodam no
+          terminal ou sobem servidor. Baixe em
+          <a class="url" href="[nodejs.org](https://nodejs.org/pt-br)">nodejs.org</a>. Para conferir:
+          <pre><code>node -v
+npm -v</code></pre>
+          Se aparecerem as versões, está pronto.
+        </li>
+        <li>
+          <span class="prompt">Instale as dependências</span> só nos projetos que têm
+          <code>package.json</code>. Entre na pasta do curso e rode:
+          <pre><code>npm install</code></pre>
+        </li>
+        <li>
+          <span class="prompt">Nomes com espaços vão entre aspas.</span> Os cursos
+          têm espaços nos nomes, então no terminal:
+          <pre><code>cd "Objetos - Fundamentos"</code></pre>
+        </li>
+      </ol>
+    </div>
+
+    <h2>Fundamentos da linguagem</h2>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Lógica JS</h3>
+        <span class="path">Logica JS/</span>
+        <span class="tag tag-browser">abre no navegador</span>
+      </div>
+      <p class="repo-desc">
+        Primeiros passos com lógica de programação e JavaScript, no projeto
+        <code>logica-js-projeto_inicial/</code>.
+      </p>
+      <p class="label">Como rodar</p>
+      <ol class="steps">
+        <li>Abra a pasta <code>Logica JS/logica-js-projeto_inicial/</code> no VS Code</li>
+        <li>Botão direito no <code>index.html</code> → <em>Open with Live Server</em></li>
+      </ol>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Introdução a Arrays</h3>
+        <span class="path">Introdução Arrays/</span>
+        <span class="tag tag-node">roda com Node</span>
+      </div>
+      <p class="repo-desc">
+        Percorrer arrays com <code>for</code> e usar métodos básicos.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "Introdução Arrays"
+node 02_arrayFor.js
+node 02_arrayMetodos.js</code></pre>
+      <p class="repo-desc">
+        O resultado aparece no próprio terminal — são scripts sem interface web.
+      </p>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Objetos — Fundamentos</h3>
+        <span class="path">Objetos - Fundamentos/</span>
+        <span class="tag tag-node">roda com Node</span>
+      </div>
+      <p class="repo-desc">
+        Objetos, iteração, funções, tipos e manipulação de JSON.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "Objetos - Fundamentos"
+node 03_objetos.js
+node 03_alterar.js
+node 03_iteracao.js
+node 03_json.js</code></pre>
+      <p class="repo-desc">
+        Cada arquivo é independente — troque o nome para rodar o que quiser.
+      </p>
+    </div>
+
+    <h2>Arrays e algoritmos</h2>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Métodos de Array</h3>
+        <span class="path">Métodos de Array/</span>
+        <span class="tag tag-browser">abre no navegador</span>
+      </div>
+      <p class="repo-desc">
+        Métodos de array aplicados a uma aplicação com requisições
+        (<code>app/</code> e <code>requisicao.txt</code>).
+      </p>
+      <p class="label">Como rodar</p>
+      <ol class="steps">
+        <li>Botão direito no <code>index.html</code> → <em>Open with Live Server</em></li>
+      </ol>
+      <p class="label">Se a página buscar dados</p>
+      <p class="repo-desc">
+        Siga o que está em <code>requisicao.txt</code> — ele indica o endereço da API
+        usada pela página.
+      </p>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Algoritmos de Ordenação e Busca</h3>
+        <span class="path">Algoritmos Ordenação e Busca/</span>
+        <span class="tag tag-node">roda com Node</span>
+      </div>
+      <p class="repo-desc">
+        Arrays ordenados, busca e <code>quickSort</code>.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "Algoritmos Ordenação e Busca"
+node 04_index.js
+node 04_busca.js
+node 04_quickSort.js</code></pre>
+      <p class="repo-desc">
+        A pasta inclui um zip com os arquivos-base do curso — descompacte se quiser
+        partir do começo.
+      </p>
+    </div>
+
+    <h2>DOM e páginas dinâmicas</h2>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Manipulando elementos DOM</h3>
+        <span class="path">Manipulando elementos DOM/</span>
+        <span class="tag tag-browser">abre no navegador</span>
+      </div>
+      <p class="repo-desc">
+        Manipulação de elementos da página, com imagens e sons.
+      </p>
+      <p class="label">Como rodar</p>
+      <ol class="steps">
+        <li>Botão direito no <code>index.html</code> → <em>Open with Live Server</em></li>
+      </ol>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Construindo Páginas Dinâmicas</h3>
+        <span class="path">Construindo Páginas Dinâmicas/</span>
+        <span class="tag tag-browser">abre no navegador</span>
+      </div>
+      <p class="repo-desc">
+        Lista de compras dinâmica: inserir, editar e excluir itens, com data e
+        checkbox de item comprado.
+      </p>
+      <p class="label">Como rodar</p>
+      <ol class="steps">
+        <li>Botão direito no <code>index.html</code> → <em>Open with Live Server</em></li>
+      </ol>
+      <p class="repo-desc">
+        Os scripts na pasta mostram as partes da lógica:
+        <code>criarItemDaLista.js</code>, <code>gerarDiaDaSemana.js</code> e
+        <code>verificarListaVazia.js</code>.
+      </p>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Páginas Dinâmicas</h3>
+        <span class="path">Páginas Dinâmicas/</span>
+        <span class="tag tag-browser">abre no navegador</span>
+      </div>
+      <p class="repo-desc">
+        Construção de páginas com conteúdo gerado em JavaScript.
+      </p>
+      <p class="label">Como rodar</p>
+      <ol class="steps">
+        <li>Botão direito no <code>index.html</code> → <em>Open with Live Server</em></li>
+      </ol>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Local Storage</h3>
+        <span class="path">Local Storage/</span>
+        <span class="tag tag-browser">abre no navegador</span>
+      </div>
+      <p class="repo-desc">
+        Persistência de dados no navegador, com scripts de CRUD
+        (<code>script.js</code> e <code>script-crud.js</code>).
+      </p>
+      <p class="label">Como rodar</p>
+      <ol class="steps">
+        <li>Botão direito no <code>index.html</code> → <em>Open with Live Server</em></li>
+        <li>Abra o console do navegador (<em>F12</em>) para inspecionar o que foi salvo</li>
+      </ol>
+      <p class="repo-desc">
+        Os dados ficam salvos no próprio navegador. Para limpar, use
+        <em>Application → Local Storage</em> nas ferramentas de desenvolvedor.
+      </p>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Reconhecimento de Voz</h3>
+        <span class="path">Reconhecimento de Voz/</span>
+        <span class="tag tag-browser">abre no navegador</span>
+      </div>
+      <p class="repo-desc">
+        Uso da Web Speech API para reconhecer comandos de voz e sortear números.
+      </p>
+      <p class="label">Como rodar</p>
+      <ol class="steps">
+        <li>Botão direito no <code>index.html</code> → <em>Open with Live Server</em></li>
+        <li>Permita o acesso ao microfone quando o navegador pedir</li>
+      </ol>
+      <p class="repo-desc">
+        A API de voz funciona melhor no Chrome ou Edge, e exige microfone.
+      </p>
+    </div>
+
+    <h2>Requisições e assincronismo</h2>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Promises, Async, Await</h3>
+        <span class="path">Promisses, Async, Await/</span>
+        <span class="tag tag-browser">abre no navegador</span>
+      </div>
+      <p class="repo-desc">
+        Promessas e código assíncrono com <code>async</code>/<code>await</code>
+        (<code>scripts.js</code>).
+      </p>
+      <p class="label">Como rodar</p>
+      <ol class="steps">
+        <li>Botão direito no <code>index.html</code> → <em>Open with Live Server</em></li>
+        <li>Acompanhe o resultado no console (<em>F12</em>)</li>
+      </ol>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Consumindo API</h3>
+        <span class="path">Consumindo API/</span>
+        <span class="tag tag-node">roda com Node</span>
+      </div>
+      <p class="repo-desc">
+        Consumo de API com página e script próprios, mais uma pasta
+        <code>backend/</code>.
+      </p>
+      <p class="label">Como rodar</p>
+      <ol class="steps">
+        <li>Abra a pasta no VS Code e rode <code>index.html</code> com Live Server</li>
+        <li>Se a página buscar dados, suba o backend em outro terminal:</li>
+      </ol>
+      <pre><code>cd "Consumindo API"
+npx json-server --watch backend/db.json</code></pre>
+      <p class="repo-desc">
+        Confira o nome do arquivo dentro de <code>backend/</code> antes de rodar —
+        ajuste o caminho do <code>--watch</code> se for outro.
+      </p>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">CRUD — Requisições HTTP</h3>
+        <span class="path">CRUD - Requisições HTTP/</span>
+        <span class="tag tag-node">roda com Node</span>
+      </div>
+      <p class="repo-desc">
+        Projeto <em>Memoteca</em>: cadastrar, listar, editar e excluir pensamentos,
+        com Fetch API, Axios e JSON Server.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "CRUD - Requisições HTTP"
+npm install
+npx json-server --watch backend/db.json</code></pre>
+      <ol class="steps">
+        <li>Com o servidor no ar, abra <code>index.html</code> com Live Server</li>
+      </ol>
+      <p class="repo-desc">
+        O README dentro da pasta lista todas as funcionalidades. O
+        <code>Como executar servidor JSON.txt</code>, na raiz do repositório, tem as
+        instruções originais do curso.
+      </p>
+    </div>
+
+    <h2>Orientação a objetos, Node e frameworks</h2>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Orientação a Objetos</h3>
+        <span class="path">Orientação a Objetos/</span>
+        <span class="tag tag-node">roda com Node</span>
+      </div>
+      <p class="repo-desc">
+        Classes (<code>User.js</code>, <code>Admin.js</code>, <code>Docente.js</code>),
+        construtor com <code>new</code> e objeto literal.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "Orientação a Objetos"
+node index.js
+node construtorNew.js
+node objetoLiteral.js</code></pre>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Node — Primeira Biblioteca</h3>
+        <span class="path">Node - Primeira Biblioteca/</span>
+        <span class="tag tag-node">roda com Node</span>
+      </div>
+      <p class="repo-desc">
+        Primeiro pacote Node, com <code>package.json</code>, <code>src/</code> e
+        arquivos de apoio.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "Node - Primeira Biblioteca"
+npm install
+npm start</code></pre>
+      <p class="repo-desc">
+        Se o <code>npm start</code> não existir, abra o <code>package.json</code> e
+        veja o script disponível — ou rode direto o arquivo de <code>src/</code> com
+        <code>node src/NOME-DO-ARQUIVO.js</code>.
+      </p>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Vue — Componentes e Diretivas</h3>
+        <span class="path">Vue Componentes e Diretivas/</span>
+        <span class="tag tag-vue">projeto Vue</span>
+      </div>
+      <p class="repo-desc">
+        Componentes e diretivas no Vue, no projeto <code>cookin-up/</code>.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "Vue Componentes e Diretivas/cookin-up"
+npm install
+npm run dev</code></pre>
+      <p class="repo-desc">
+        O Vite mostra no terminal o endereço local (algo como
+        <code>[localhost](http://localhost:5173)</code>). Abra no navegador e deixe o comando
+        rodando.
+      </p>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Vue Design Tracker</h3>
+        <span class="path">Vue Design Tracker/</span>
+        <span class="tag tag-vue">projeto Vue</span>
+      </div>
+      <p class="repo-desc">
+        Aplicação <code>design-tracker/</code> em Vue.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "Vue Design Tracker/design-tracker"
+npm install
+npm run dev</code></pre>
+      <p class="repo-desc">
+        O arquivo <code>InicializarApp.txt</code>, dentro da pasta do curso, tem as
+        instruções originais de inicialização.
+      </p>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">Asset RPA</h3>
+        <span class="path">Asset RPA/</span>
+        <span class="tag tag-browser">abre no navegador</span>
+      </div>
+      <p class="repo-desc">
+        Tela inicial (<code>telaInicial.html</code>) usada como apoio.
+      </p>
+      <p class="label">Como rodar</p>
+      <ol class="steps">
+        <li>Abra <code>telaInicial.html</code> com Live Server</li>
+      </ol>
+    </div>
+
+    <div class="note">
+      As etiquetas indicam o tipo de execução: <strong>abre no navegador</strong> para
+      páginas estáticas, <strong>roda com Node</strong> para scripts e projetos com
+      servidor, e <strong>projeto Vue</strong> para os que usam Vite. Nenhum deles
+      precisa de hospedagem — tudo roda na sua máquina.
+    </div>
+
+    <footer>
+      Repositório: <a href="[github.com](https://github.com/Roger-Kk/Cursos-JS)">Roger-Kk/Cursos-JS</a>
+    </footer>
+  </main>
+</body>
+</html>
