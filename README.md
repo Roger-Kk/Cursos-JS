@@ -4,7 +4,7 @@ Repositório para aprendizado de JavaScript. Cursos Alura JavaScript.
 
 Cada pasta refere-se a um curso em linguagem predominante JavaScript, com os arquivos de código para seu devido fim.
 
-📖 **[Ver os exemplos e como rodar cada um]([https://roger-kk.github.io/Cursos-JS/])**
+📖 **[Ver os exemplos e como rodar cada um](https://roger-kk.github.io/Cursos-JS/)**
 
 ## Fundamentos da linguagem
 
